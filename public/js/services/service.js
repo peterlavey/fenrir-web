@@ -1,4 +1,11 @@
 angular.module('FenrirService', [])
+.factory('RutaService', ['$http',function($http) {
+	return {
+		getRutas:function(id){
+	        return $http.get('http://localhost:3001/api/ruta/'+id);
+	    }
+	}
+}])
 .factory('LoginService', ['$http',function($http) {
 	return {
 		login:function(user){
