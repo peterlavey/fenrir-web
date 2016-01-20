@@ -1,9 +1,15 @@
 angular.module('FenrirService', [])
 .factory('RutaService', ['$http',function($http) {
 	return {
+    updateRuta:function(id, ruta){
+      return $http.put('http://localhost:3001/api/ruta/'+id, ruta);
+    },
 		getRutas:function(id){
-	        return $http.get('http://localhost:3001/api/ruta/'+id);
-	    }
+      return $http.get('http://localhost:3001/api/ruta/'+id);
+    },
+    createRuta:function(id, ruta){
+      return $http.post('http://localhost:3001/api/ruta/'+id, ruta);
+    }
 	}
 }])
 .factory('LoginService', ['$http',function($http) {

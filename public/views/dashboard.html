@@ -20,16 +20,117 @@
 	<script src="js/main.js"></script>
 </head>
 <body ng-controller="RutaCtrl">
-	<form ng-submit="submit()">       
-		<ul class="nav nav-pills" role="tablist">
-		  <li role="presentation" class="active"><a href="#">Rutas <span class="badge">{{rutas.length}}</span></a></li>
-		  <li role="presentation"><a href="#">Añadir</a></li>
-		  <li role="presentation"><a href="#">Perfil</a></li>
-		  <li role="presentation"><a href="#" ng-click="logout()">Logout</a></li>
+	<form ng-submit="submit()" role="form">       
+		<ul class="nav nav-tabs">
+			<li class="active"><a data-toggle="tab" href="#home">Rutas<span class="badge">{{rutas.length}}</span></a></li>
+		  	<li><a data-toggle="tab" href="#menu1">Añadir</a></li>
+		  	<li><a data-toggle="tab" href="#menu2">Perfil</a></li>
+		  	<li><a href="#" ng-click="logout()">Logout</a></li>
 		</ul>
-		<ul ng-repeat="ruta in rutas" class="list-group">
-			<li class="list-group-item">{{ruta.nombre}}</li>
-		</ul>
+
+		<div class="tab-content">
+		  	<div id="home" class="tab-pane fade in active">
+				<div class="panel panel-default" style="display:{{flgRuta}}">
+					<div class="panel-heading">Rutas</div>
+					<ul ng-repeat="ruta in rutas" ng-click="seleccionaRuta(ruta)" class="list-group">
+						<li class="list-group-item">{{ruta.nombre}}</li>
+					</ul>
+				</div>
+
+				<div class="panel panel-default" style="display:{{flgDespacho}}">
+					<div class="panel-heading">Detalle Ruta</div>
+					<button ng-click="volver()" class="btn btn-primary" type="submit">volver</button>   
+					<ul class="nav nav-tabs">
+					  <li class="active"><a data-toggle="tab" href="#ruta">Ruta</a></li>
+					  <li><a data-toggle="tab" href="#aDespacho">Añadir Despacho</a></li>
+					  <li><a data-toggle="tab" href="#vDespacho">Ver Despachos</a></li>
+					</ul>
+					<div class="tab-content">
+						<div id="ruta" class="tab-pane fade in active">
+							<div class="row">
+					  			<div class="col-xs-4">
+					    			<input ng-model="ruta.nombre" type="text" class="form-control" placeholder="Nombre">
+					  			</div>
+					  			<div class="col-xs-4">
+					    			<input ng-model="ruta.descripcion" type="text" class="form-control" placeholder="Descripción">
+					  			</div>
+					  			<div class="col-xs-4">
+					    			<input ng-model="ruta.direccion.ciudad" type="text" class="form-control" placeholder="Ciudad">
+					  			</div>
+							</div>
+							<div class="row">
+					  			<div class="col-xs-4">
+					    			<input ng-model="ruta.direccion.region" type="text" class="form-control" placeholder="Región">
+					  			</div>
+					  			<div class="col-xs-4">
+					    			<input ng-model="ruta.direccion.detalle" type="text" class="form-control" placeholder="Detalle">
+					  			</div>
+					  			<div class="col-xs-4">
+					    			<input ng-model="ruta.carga.tipo" type="text" class="form-control" placeholder="Tipo de carga">
+					  			</div>
+							</div>
+							<div class="row">
+					  			<div class="col-xs-4">
+					    			<input ng-model="ruta.carga.peso" type="text" class="form-control" placeholder="Peso aprox.">
+					  			</div>
+					  			<div class="col-xs-4">
+					    			<input ng-model="ruta.oferta" type="text" class="form-control" placeholder="Oferta">
+					  			</div>
+					  			<div class="col-xs-4">
+					  				<button ng-click="updateRuta()" class="btn btn-primary btn-block" type="submit">Modificar</button>   
+					  			</div>
+							</div>
+						</div>
+						<div id="aDespacho" class="tab-pane fade">
+							aaa
+						</div>
+						<div id="vDespacho" class="tab-pane fade">
+							bbb
+						</div>
+					</div>	
+				</div>
+			</div>
+		  	<div id="menu1" class="tab-pane fade">
+		    	<h3>Añadir rutas</h3>
+	    		<div class="row">
+		  			<div class="col-xs-4">
+		    			<input ng-model="ruta.nombre" type="text" class="form-control" placeholder="Nombre">
+		  			</div>
+		  			<div class="col-xs-4">
+		    			<input ng-model="ruta.descripcion" type="text" class="form-control" placeholder="Descripción">
+		  			</div>
+		  			<div class="col-xs-4">
+		    			<input ng-model="ruta.direccion.ciudad" type="text" class="form-control" placeholder="Ciudad">
+		  			</div>
+				</div>
+				<div class="row">
+		  			<div class="col-xs-4">
+		    			<input ng-model="ruta.direccion.region" type="text" class="form-control" placeholder="Región">
+		  			</div>
+		  			<div class="col-xs-4">
+		    			<input ng-model="ruta.direccion.detalle" type="text" class="form-control" placeholder="Detalle">
+		  			</div>
+		  			<div class="col-xs-4">
+		    			<input ng-model="ruta.carga.tipo" type="text" class="form-control" placeholder="Tipo de carga">
+		  			</div>
+				</div>
+				<div class="row">
+		  			<div class="col-xs-4">
+		    			<input ng-model="ruta.carga.peso" type="text" class="form-control" placeholder="Peso aprox.">
+		  			</div>
+		  			<div class="col-xs-4">
+		    			<input ng-model="ruta.oferta" type="text" class="form-control" placeholder="Oferta">
+		  			</div>
+		  			<div class="col-xs-4">
+		  				<button ng-click="createRuta()" class="btn btn-primary btn-block" type="submit">Grabar</button>   
+		  			</div>
+				</div>
+		  	</div>
+		  	<div id="menu2" class="tab-pane fade">
+		    	<h3>Menu 2</h3>
+		    	<p>Some content in menu 2.</p>
+		  	</div>
+		</div>
 	</form>
 </body>
 </html>

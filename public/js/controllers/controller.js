@@ -9,15 +9,53 @@ angular.module('FenrirCtrl', [])
 	        window.location.pathname='dashboard';
 	    }).error(function (data, status, headers, config) {
 	        sessionStorage.removeItem('token');
+	        alert("Usuario no valido");
 	    });
 	};
 }])
 .controller('RutaCtrl', ['$scope','$http', 'RutaService', '$location', function($scope, $http, RutaService, $location) {
+	$scope.ruta= {nombre: "",
+                 descripcion: "",
+                 direccion:{
+                    ciudad: "",
+                    region: "",
+                    detalle: ""
+                 },
+                 carga:{
+                    tipo: "",
+                    peso: null
+                 },
+                 oferta: null}
+    $scope.flgRuta='inline';
+    $scope.flgDespacho='none';
+    $scope.updateRuta=function(ruta){
+    	RutaService.updateRuta($scope.ruta._id, $scope.ruta).success(function(data){
+    		console.info("update success");
+    	}).error(function(){
+    		alert("Error update")
+    	});
+    };             
+    $scope.seleccionaRuta=function(ruta){ 	 
+    	$scope.flgRuta='none';
+    	$scope.flgDespacho='inline';   
+    	$scope.ruta=ruta;
+    };
+    $scope.volver=function(ruta){
+    	 $scope.flgRuta='inline';
+    	$scope.flgDespacho='none';     
+    };
+	$scope.createRuta=function(){
+		RutaService.createRuta(sessionStorage.getItem('usuario'), $scope.ruta).success(function(data){
+			console.info("Ruta Creada!");
+		}).error(function(){
+			alert("Error crea ruta")
+		})
+	};
 	$scope.getRutas=function(){
 		RutaService.getRutas(sessionStorage.getItem('usuario')).success(function(data){
 			$scope.rutas=data;
 		}).error(function(){
-			alert("Error rutas");
+			alert("Error lista rutas");
 		});
 	};
 	$scope.logout=function(){
