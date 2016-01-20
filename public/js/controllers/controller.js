@@ -25,9 +25,33 @@ angular.module('FenrirCtrl', [])
                     tipo: "",
                     peso: null
                  },
-                 oferta: null}
+                 oferta: null};
+	$scope.despacho =	{nombre: "",
+                        descripcion: "",
+                        direccion:{
+                            descripcion: "",
+                            lat: null,
+                            lon: null
+                        }};            
     $scope.flgRuta='inline';
     $scope.flgDespacho='none';
+    $scope.cleanRuta=function(){
+    	$scope.ruta={};
+    };
+    $scope.getDespachos=function(){
+    	RutaService.getDespachos($scope.ruta._id).success(function(data){
+    		$scope.despachos=data;
+    	}).error(function(){
+    		alert("Error despachos");
+    	});
+    }
+    $scope.createDespacho=function(){
+    	RutaService.createDespacho($scope.ruta._id, $scope.despacho).success(function(data){
+    		$scope.getDespachos();
+    	}).error(function(){
+    		alert("Error despacho");
+    	});
+    };
     $scope.updateRuta=function(ruta){
     	RutaService.updateRuta($scope.ruta._id, $scope.ruta).success(function(data){
     		console.info("update success");
@@ -39,6 +63,7 @@ angular.module('FenrirCtrl', [])
     	$scope.flgRuta='none';
     	$scope.flgDespacho='inline';   
     	$scope.ruta=ruta;
+    	$scope.getDespachos();
     };
     $scope.volver=function(ruta){
     	 $scope.flgRuta='inline';
@@ -46,7 +71,7 @@ angular.module('FenrirCtrl', [])
     };
 	$scope.createRuta=function(){
 		RutaService.createRuta(sessionStorage.getItem('usuario'), $scope.ruta).success(function(data){
-			console.info("Ruta Creada!");
+			$scope.getRutas();
 		}).error(function(){
 			alert("Error crea ruta")
 		})

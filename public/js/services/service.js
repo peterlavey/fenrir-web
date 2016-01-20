@@ -1,6 +1,12 @@
 angular.module('FenrirService', [])
 .factory('RutaService', ['$http',function($http) {
 	return {
+    getDespachos:function(id){
+      return $http.get('http://localhost:3001/api/despacho/'+id);
+    },
+    createDespacho:function(id, despacho){
+      return $http.post('http://localhost:3001/api/despacho/'+id, despacho);
+    },
     updateRuta:function(id, ruta){
       return $http.put('http://localhost:3001/api/ruta/'+id, ruta);
     },

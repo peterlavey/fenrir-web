@@ -23,7 +23,7 @@
 	<form ng-submit="submit()" role="form">       
 		<ul class="nav nav-tabs">
 			<li class="active"><a data-toggle="tab" href="#home">Rutas<span class="badge">{{rutas.length}}</span></a></li>
-		  	<li><a data-toggle="tab" href="#menu1">Añadir</a></li>
+		  	<li><a ng-click="cleanRuta()" data-toggle="tab" href="#menu1">Añadir</a></li>
 		  	<li><a data-toggle="tab" href="#menu2">Perfil</a></li>
 		  	<li><a href="#" ng-click="logout()">Logout</a></li>
 		</ul>
@@ -43,7 +43,7 @@
 					<ul class="nav nav-tabs">
 					  <li class="active"><a data-toggle="tab" href="#ruta">Ruta</a></li>
 					  <li><a data-toggle="tab" href="#aDespacho">Añadir Despacho</a></li>
-					  <li><a data-toggle="tab" href="#vDespacho">Ver Despachos</a></li>
+					  <li><a data-toggle="tab" href="#vDespacho">Ver Despachos<span class="badge">{{despachos.length}}</span></a></li>
 					</ul>
 					<div class="tab-content">
 						<div id="ruta" class="tab-pane fade in active">
@@ -82,10 +82,27 @@
 							</div>
 						</div>
 						<div id="aDespacho" class="tab-pane fade">
-							aaa
+							<div class="row">
+					  			<div class="col-xs-4">
+					    			<input ng-model="despacho.nombre" type="text" class="form-control" placeholder="Nombre">
+					  			</div>
+					  			<div class="col-xs-4">
+					    			<input ng-model="despacho.descripcion" type="text" class="form-control" placeholder="Descripción">
+					  			</div>
+					  			<div class="col-xs-4">
+					    			<input ng-model="despacho.direccion.descripcion" type="text" class="form-control" placeholder="Dirección">
+					  			</div>
+							</div>
+							<div class="row">
+					  			<div class="col-xs-4">
+									<button ng-click="createDespacho()" class="btn btn-primary" type="submit">Grabar</button>   
+					  			</div>
+					  		</div>	
 						</div>
 						<div id="vDespacho" class="tab-pane fade">
-							bbb
+							<ul ng-repeat="despacho in despachos" class="list-group">
+								<li class="list-group-item">{{despacho.nombre}}</li>
+							</ul>
 						</div>
 					</div>	
 				</div>
